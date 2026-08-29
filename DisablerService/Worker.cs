@@ -3,11 +3,9 @@ using System.Diagnostics;
 
 namespace DisablerService;
 
-public class Worker(ILogger<Worker> logger) : BackgroundService
+public class Worker : BackgroundService
 {
     private readonly TimeSpan _intervalToSearchByProcess = TimeSpan.FromMinutes(2);
-    private readonly ILogger<Worker> _logger = logger;
-
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
@@ -16,11 +14,7 @@ public class Worker(ILogger<Worker> logger) : BackgroundService
             using var timer = new PeriodicTimer(_intervalToSearchByProcess);
 
             while (await timer.WaitForNextTickAsync(stoppingToken))
-            {
-                _logger.LogInformation("Worker executing task at: {time}", DateTimeOffset.Now);
-
                 HandleOperation();
-            }
         }
     }
 
