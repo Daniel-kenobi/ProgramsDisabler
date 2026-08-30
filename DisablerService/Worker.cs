@@ -5,7 +5,7 @@ namespace DisablerService;
 
 public class Worker : BackgroundService
 {
-    private readonly TimeSpan _intervalToSearchByProcess = TimeSpan.FromMinutes(2);
+    private readonly TimeSpan _intervalToSearchByProcess = TimeSpan.FromSeconds(30);
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
@@ -26,16 +26,12 @@ public class Worker : BackgroundService
 
     private static bool IsProcessOpen(string processName)
     {
-        var allRunnningProcesses = Process.GetProcesses();
+        var processesByName = Process.GetProcessesByName(processName);
 
-        if (allRunnningProcesses.Length <= 0)
+        if (processesByName.Length <= 0)
             return false;
 
-        return allRunnningProcesses.Any(
-            x => string.Equals(
-                x.ProcessName, processName, StringComparison.OrdinalIgnoreCase
-            )
-        );
+        return processesByName.Length > 0;
     }
 
     private static Process[] GetProcessesByName(string processName) =>
