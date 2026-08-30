@@ -8,18 +8,6 @@ The service runs in the background and periodically checks whether CS2 is runnin
 
 When CS2 is detected, it checks if the `Lookupper` process is also running. If both processes are active, `Lookupper` is automatically terminated.
 
-CS2 is running
-      │
-      ▼
-Is Lookupper running?
-      │
-      ├── No ──► Do nothing
-      │
-      └── Yes
-           │
-           ▼
-     Terminate Lookupper
-
 ## Use Case
 
 I built this utility to solve a simple problem on my own machine.
@@ -63,9 +51,4 @@ The application can also be executed directly during development:
 
 ```bash
 dotnet run
-```
-
-When installed as a Windows Service, it runs in the background and periodically checks for the configured processes.
-
-```
 ```
