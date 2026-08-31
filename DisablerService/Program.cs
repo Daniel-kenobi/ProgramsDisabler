@@ -1,11 +1,8 @@
-using DisablerService;
+using DisablerService.Infraestructure;
 
 var builder = Host.CreateApplicationBuilder(args);
 
-builder.Services.AddHostedService<Worker>().AddWindowsService(options =>
-{
-    options.ServiceName = "ProgramsDisabler";
-});
+builder.BuildService().BuildOptions();
 
 var host = builder.Build();
 host.Run();
